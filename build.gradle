@@ -1,3 +1,20 @@
+/**
+!!! HEY THERE !!!
+Remeber to replace the token on line 40 with the encrypted text down below
+
+Base64: 0HUxb31zMQw5gJmluYWTE7skqRnLMRS9ezEyL16Bdj7w2DX30a3uP/Hk+YI9okX1
+Hex: D075316F7D73310C398099A5B9859313BB24A919CB3114BD7B31322F5E81763EF0D835F7D1ADEE3FF1E4F9823DA245F5
+
+Decryption information down below
+Algorithm: AES256
+Padding: PKCS7
+Key: 31415926535897932384626433832795
+
+Why do I have to encrypt this???
+Because of github and I don`t want to do a hell lot of work to set this token in my enviroment varibles
+
+ */
+
 // Stuffs for threading
 import java.io.*;
 import java.util.*;
@@ -32,7 +49,7 @@ final String MAIN_CLASS = "top.example.Main";
 // Build & run
 repositories {
     mavenCentral();
-    maven { url("https://maven.pkg.github.com/Sob1234509876/Omni-com"); credentials {username = "Sob1234509876"; password = "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"; }; };
+    maven { url("https://maven.pkg.github.com/Sob1234509876/Omni-com"); credentials {username = "Sob1234509876"; password = "Enter the decypted token"; }; };
 };
 
 dependencies {
