@@ -1,0 +1,10 @@
+# Temp files and folders
+.*/
+tmp/
+reports/
+configs/
+saves/
+
+# Builds and binary
+build
+bin
