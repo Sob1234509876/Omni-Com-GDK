@@ -1,20 +1,3 @@
-/**
-!!! HEY THERE !!!
-Remeber to replace the token on line 40 with the encrypted text down below
-
-Base64: 0HUxb31zMQw5gJmluYWTE7skqRnLMRS9ezEyL16Bdj7w2DX30a3uP/Hk+YI9okX1
-Hex: D075316F7D73310C398099A5B9859313BB24A919CB3114BD7B31322F5E81763EF0D835F7D1ADEE3FF1E4F9823DA245F5
-
-Decryption information down below
-Algorithm: AES256
-Padding: PKCS7
-Key: 31415926535897932384626433832795
-
-Why do I have to encrypt this???
-Because of github and I don`t want to do a hell lot of work to set this token in my enviroment varibles
-
- */
-
 // Stuffs for threading
 import java.io.*;
 import java.util.*;
@@ -24,6 +7,7 @@ import java.util.*;
 plugins {
     id("java");
     id("application");
+    id("maven-publish")
 };
 
 sourceSets {
@@ -38,22 +22,28 @@ sourceSets {
     };
 };
 
-version = "1.0a-SNAPSHOT";
+version = "1.0a-SNAPSHOT"; // This might be forgetted to be changed to released name
 
-final String CORE_ARGS = "-saveDir=\"${buildDir}/saves\" -plugDir=\"${buildDir}/libs\" -confDir=\"${rootDir}/configs\" -repoDir=\"${rootDir}/reports\" -uuid=114514";
+final String CORE_ARGS = "-saveDir=\"${rootDir}/saves\" -plugDir=\"${buildDir}/libs\" -confDir=\"${rootDir}/configs\" -repoDir=\"${rootDir}/reports\" -uuid=114514";
 final String CORE_VERSION = "1.2.8a-SNAPSHOT";
-final String MAIN_CLASS = "top.example.Main";
-
+final String MAIN_CLASS = "top.sob.vanilla.Main";
+final String PUBLISH_URL = "YOUR_REM_URL/URI";
 
 //////////////////////////////////////////
 // Build & run
 repositories {
-    mavenCentral();
-    maven { url("https://maven.pkg.github.com/Sob1234509876/Omni-com"); credentials {username = "Sob1234509876"; password = "Enter the decypted token"; }; };
+    mavenCentral()
+    maven {
+        url("https://maven.pkg.github.com/Sob1234509876/Omni-com");
+        credentials {
+            username = System.getenv("MAVEN_USERNAME");
+            password = System.getenv("MAVEN_PASSWORD");
+        };
+    };
 };
 
 dependencies {
-    implementation("top.sob:core:${CORE_VERSION}");
+    implementation "top.sob:core:${CORE_VERSION}";
 };
 
 application {
@@ -67,6 +57,16 @@ jar {
         );
     };
 };
+
+// Java documents
+javadoc {
+    options {
+        encoding "utf-8"
+        charSet "utf-8"
+        author true
+        version true
+    }
+}
 
 //////////////////////////////////////////
 
@@ -165,3 +165,29 @@ tasks.register("runByCore") {
     };
 
 };
+
+//////////////////////////////////////////
+
+// Maven publish
+publishing {
+    repositories {
+        maven {
+            name = "Github"
+            url = uri(PUBLISH_URL)
+            credentials {
+                // Set your enviroment value
+                username = System.getenv("MAVEN_USERNAME")
+                password = System.getenv("MAVEN_PASSWORD")
+            }
+        }
+    }
+
+    publications {
+        myApp(MavenPublication) {
+            version = "1.0a-SNAPSHOT"
+            groupId = "top.sob"
+            artifactId = "vanilla"
+            from components.java
+        }
+    }
+}

@@ -3,4 +3,4 @@ pluginManagement {
         mavenLocal()
     }
 }
-rootProject.name = "vanilla"
+rootProject.name = "MyPrj" // Set to your own one.
